@@ -38,6 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'drf_yasg',  
+    'tutoring_platform',
+    'basic'
 ]
 
 MIDDLEWARE = [
@@ -129,4 +132,12 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
     ]
+}
+
+SWAGGER_SETTINGS = {  
+    'SECURITY_DEFINITIONS': {  
+        'Basic': {  
+            'type': 'basic'  
+        }  
+    }  
 }
