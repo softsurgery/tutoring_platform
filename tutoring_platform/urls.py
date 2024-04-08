@@ -3,6 +3,8 @@ from django.contrib.auth.models import User
 from rest_framework import routers, serializers, viewsets, permissions  
 from drf_yasg.views import get_schema_view  
 from drf_yasg import openapi  
+from rest_framework_simplejwt import views as jwt_views
+from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView
 
 # Serializers define the API representation.
 class UserSerializer(serializers.HyperlinkedModelSerializer):
@@ -14,30 +16,19 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+    permission_classes = [permissions.IsAdminUser] 
 
 router = routers.DefaultRouter()
 router.register(r'users', UserViewSet)
 
 
-schema_view = get_schema_view(  
-    openapi.Info(  
-        title="Tutoring Platform",  
-        default_version='v1',  
-        description="Tutoring Platform under development",  
-        terms_of_service="",  
-        contact=openapi.Contact(email="contact@example.com"),  
-        license=openapi.License(name="Awesome License"),  
-    ),  
-    public=True,  
-    permission_classes=(permissions.AllowAny,),  
-)  
-
-# Wire up our API using automatic URL routing.
-# Additionally, we include login URLs for the browsable API.
 urlpatterns = [
     path('', include(router.urls)),
     path('api/', include('basic.urls')),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-    path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),  
-    path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),  
+    path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
+    path('api/schema/swagger-ui/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
+    path('api/schema/redoc/', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
+    path('api/token/', jwt_views.TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),  
 ]
