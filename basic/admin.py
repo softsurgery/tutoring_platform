@@ -1,7 +1,6 @@
 from django.contrib import admin
-from .models import Course, Level, Lesson, Material, Practice, Question, PracticeSession, PracticeResult, StudentLesson
+from .models import *
 
-# Register your models here
 admin.site.register(Course)
 admin.site.register(Level)
 admin.site.register(Lesson)
@@ -11,3 +10,5 @@ admin.site.register(Question)
 admin.site.register(PracticeSession)
 admin.site.register(PracticeResult)
 admin.site.register(StudentLesson)
+admin.site.register(Student)
+admin.site.register(Tutor)

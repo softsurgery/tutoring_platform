@@ -1,6 +1,22 @@
 from rest_framework import generics
-from .models import Course, Level, Lesson, Material, Practice, Question, PracticeSession, PracticeResult, StudentLesson
-from .serializers import CourseSerializer, LevelSerializer, LessonSerializer, MaterialSerializer, PracticeSerializer, QuestionSerializer, PracticeSessionSerializer, PracticeResultSerializer, StudentLessonSerializer
+from .models import *
+from .serializers import *
+
+class TutorListCreateAPIView(generics.ListCreateAPIView):
+    queryset = Tutor.objects.all()
+    serializer_class = TutorSerializer
+
+class TutorRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Tutor.objects.all()
+    serializer_class = TutorSerializer
+
+class StudentListCreateAPIView(generics.ListCreateAPIView):
+    queryset = Student.objects.all()
+    serializer_class = StudentSerializer
+
+class StudentRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Student.objects.all()
+    serializer_class = StudentSerializer
 
 # Views for Course model
 class CourseListCreateAPIView(generics.ListCreateAPIView):

@@ -2,6 +2,15 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
+    
+    # URLs for Tutor model
+    path('tutors/', views.TutorListCreateAPIView.as_view(), name='tutor-list-create'),
+    path('tutors/<int:pk>/', views.TutorRetrieveUpdateDestroyAPIView.as_view(), name='tutor-detail'),
+    
+    # URLs for Student model
+    path('students/', views.StudentListCreateAPIView.as_view(), name='student-list-create'),
+    path('students/<int:pk>/', views.StudentRetrieveUpdateDestroyAPIView.as_view(), name='student-detail'),
+
     # URLs for Course model
     path('course/', views.CourseListCreateAPIView.as_view(), name='course_list_create'),
     path('course/<int:pk>/', views.CourseRetrieveUpdateDestroyAPIView.as_view(), name='course_detail'),
